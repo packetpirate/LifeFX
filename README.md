@@ -1,6 +1,7 @@
 # LifeFX
 
 **Author:** Darin Beaudreau
+
 **Platform:** Java 8, JavaFX
 
 ### Description
