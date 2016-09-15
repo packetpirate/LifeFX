@@ -1,5 +1,7 @@
 package com.lifefx.utils;
 
+import java.util.Optional;
+
 import com.lifefx.Environment;
 import com.lifefx.Game;
 
@@ -15,6 +17,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -51,7 +54,7 @@ public class GameUI {
 		{ // Setup the main toolbar.
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			ChoiceBox simChoice = new ChoiceBox(FXCollections.observableArrayList(
-					"Wireworld", "Cyclic Automata", "Rainbow Game")
+					"Wireworld", "Cyclic Automata", "Rainbow Game", "Custom")
 			);
 			
 			HBox.setMargin(simChoice, new Insets(5, 0, 5, 0));
@@ -63,6 +66,7 @@ public class GameUI {
 					else if(new_val.intValue() == 0) Game.schema = Game.Schema.WIREWORLD;
 					else if(new_val.intValue() == 1) Game.schema = Game.Schema.CYCLIC;
 					else if(new_val.intValue() == 2) Game.schema = Game.Schema.RAINBOW;
+					else if(new_val.intValue() == 3) Game.schema = Game.Schema.CUSTOM;
 					
 					env.reset();
 					resetPropbar();
@@ -180,6 +184,19 @@ public class GameUI {
 				}
 			});
 			propbar.getChildren().add(nColorsSlider);
+		} else if(Game.schema == Game.Schema.CUSTOM) {
+			Button rb = new Button("Change Ruleset");
+			VBox.setMargin(rb, new Insets(0, 10, 0, 10));
+			rb.setOnMouseClicked(event -> {
+				TextInputDialog dlg = new TextInputDialog();
+				dlg.setTitle("Enter New Ruleset");
+				dlg.setHeaderText("Enter the new ruleset string.");
+				dlg.setContentText("Ex: 23/3 (default Conway's Life)");
+				
+				Optional<String> s = dlg.showAndWait();
+				if(s.isPresent()) Game.rules.parseRules(s.get());
+			});
+			propbar.getChildren().add(rb);
 		}
 	}
 	
@@ -218,6 +235,14 @@ public class GameUI {
 			Rectangle dark = createColorBox(Cells.Rainbow.DARK.getColor(), 30);
 			HBox.setMargin(dark, new Insets(10, 0, 10, 0));
 			colorbar.getChildren().add(dark);
+		} else if(Game.schema == Game.Schema.CUSTOM) {
+			Rectangle empty = createColorBox(Cells.getSchemaEmptyColor(), 30);
+			HBox.setMargin(empty, new Insets(10, 0, 10, 10));
+			colorbar.getChildren().add(empty);
+			
+			Rectangle cells = createColorBox(Cells.Custom.CELLS.getColor(), 30);
+			HBox.setMargin(cells, new Insets(10, 0, 10, 10));
+			colorbar.getChildren().add(cells);
 		}
 	}
 	

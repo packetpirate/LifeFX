@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.lifefx.utils.Cells;
 import com.lifefx.utils.GameUI;
+import com.lifefx.utils.Ruleset;
 
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
@@ -23,6 +24,8 @@ public class Game {
 	
 	public static boolean paused = true;
 	
+	public static Ruleset rules = new Ruleset("23/3");
+	
 	private Stage mainStage;
 	private Scene mainScene;
 	
@@ -32,7 +35,7 @@ public class Game {
 	public static int cellsWide = 40, cellsHigh = 40;
 	
 	public enum Schema {
-		WIREWORLD, CYCLIC, RAINBOW;
+		WIREWORLD, CYCLIC, RAINBOW, CUSTOM;
 	}
 	
 	private GameUI ui;

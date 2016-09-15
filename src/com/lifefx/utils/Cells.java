@@ -37,6 +37,18 @@ public class Cells {
 		}
 	}
 	
+	public static enum Custom {
+		EMPTY(Color.GRAY),
+		CELLS(Color.BLACK);
+		
+		private Color cellColor;
+		public Color getColor() { return cellColor; }
+		
+		Custom(Color c) {
+			cellColor = c;
+		}
+	}
+	
 	@SuppressWarnings("serial")
 	public static Map<Integer, Color> Cyclic = new HashMap<Integer, Color>() {{
 		put(0, Color.rgb(0x00, 0x55, 0x00));
@@ -84,6 +96,7 @@ public class Cells {
 		if(Game.schema == Game.Schema.WIREWORLD) c = Cells.Wireworld.EMPTY.getColor();
 		else if(Game.schema == Game.Schema.CYCLIC) c = Color.WHITE;
 		else if(Game.schema == Game.Schema.RAINBOW) c = Cells.Rainbow.EMPTY.getColor();
+		else if(Game.schema == Game.Schema.CUSTOM) c = Cells.Custom.EMPTY.getColor();
 		
 		return c;
 	}

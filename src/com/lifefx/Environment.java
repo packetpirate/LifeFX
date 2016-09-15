@@ -92,6 +92,15 @@ public class Environment<T> {
 					return neighbors.averageSpecies();
 				}
 			}
+		} else if(Game.schema == Game.Schema.CUSTOM) {
+			boolean alive = (species != null) && (species != Cells.getSchemaEmptyColor());
+			int n = neighbors.getNeighbors();
+			
+			if(alive) {
+				if(Game.rules.isSurviveCondition(n)) return species;
+			} else {
+				if(Game.rules.isBornCondition(n)) return (T)Cells.Custom.CELLS.getColor();
+			}
 		}
 		
 		return (T)Cells.getSchemaEmptyColor();
