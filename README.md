@@ -26,4 +26,3 @@ and now I don't think I'll ever go back to Swing.
  
 ### TODO
  - Add a save/load feature so patterns can be saved and reloaded for later use.
- - Add "WalledCities" variant.
